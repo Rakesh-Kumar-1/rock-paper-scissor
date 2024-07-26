@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body class="body">
+    <h1 class="title">ROCK PAPER SCISSOR GAME</h1>
+    <div class="game">
+        <button onclick="show();
+         input('Rock');
+        " class="button">
+            <img class="pic" src="rock-emoji.png" alt="">
+        </button>
+        <button onclick="show();
+         input('Paper');
+        " class="button">
+            <img class="pic" src="paper-emoji.png" alt="">
+        </button>
+        <button onclick="show();
+        input('Scissor');
+        " class="button">
+            <img class="pic" src="scissors-emoji.png" alt="">
+        </button>
+    </div>
+        <button onclick="score.win=0;score.lose=0;score.tie=0;print();
+        localStorage.clear();" class="Rest-button">Reset</button>
+        <p class="paragraph"></p>
+    <script>
+        let score=JSON.parse(localStorage.getItem('score'))||{
+         win:0,                            
+         lose:0,
+         tie:0
+        };
+        /* we can write here  const value{win=0,lose=0,tie=0};   */
+        let computerChoiceImage = '';
+        let result = '';
+        //let vari=document.querySelector('.paragraph');
+        //vari.innerHTML=`Win: ${win},  Lose: ${lose},  Tie: ${tie}`;
+        print();
+        function show() {
+            let computerChoice = Math.random();
+            if (computerChoice > 0 && computerChoice <= 0.33) {
+                computerChoiceImage = 'Rock';
+            }
+            else if (computerChoice > 0.33 && computerChoice <= 0.66) {
+                computerChoiceImage = 'Paper';
+            }
+            else if (computerChoice > 0.66 && computerChoice <= 1) {
+                computerChoiceImage = 'Scissor';
+            }
+        }
+        function input(parameter) {
+            if (parameter === 'Rock') {
+                if (computerChoiceImage === 'Rock') {
+                    result = 'tie';
+                }
+                else if (computerChoiceImage === 'Paper') {
+                    result = 'lose';
+                }
+                else if (computerChoiceImage === 'Scissor') {
+                    result = 'win';
+                }
+            }
+            else if (parameter === 'Paper') {
+                if (computerChoiceImage === 'Paper') {
+                    result = 'tie';
+                }
+                else if (computerChoiceImage === 'Scissor') {
+                    result = 'lose';
+                }
+                else if (computerChoiceImage === 'Rock') {
+                    result = 'win';
+                }
+            }
+            else if (parameter === 'Scissor') {
+                if (computerChoiceImage === 'Scissor') {
+                    result = 'tie';
+                }
+                else if (computerChoiceImage === 'Rock') {
+                    result = 'lose';
+                }
+                else if (computerChoiceImage === 'Paper') {
+                    result = 'win';
+                }
+            }
+            if (result === 'win') {
+                score.win += 1;
+            }
+            else if (result === 'lose') {
+                score.lose += 1;
+            }
+            else if (result === 'tie') {
+                score.tie += 1;
+            }
+
+            print();
+
+            //alert(`Yoy have picked ${parameter},Guess what! you ${result} 
+            //Win: ${win},  Lose: ${lose},  Tie: ${tie}`);
+        }
+        function print(){
+            let vari=document.querySelector('.paragraph');
+            localStorage.setItem('score',JSON.stringify(score));
+            vari.innerHTML=`Win: ${score.win},  Lose: ${score.lose},  Tie: ${score.tie}`;
+        }
+    </script>
+</body>
+
+</html>
